@@ -23,7 +23,10 @@ class _HomeSectionTabState extends State<HomeSectionTab> {
           "https://news.google.com/rss/headlines/section/topic/${widget.topic.toUpperCase()}?ceid=US:EN&hl=en&gl=US"));
       if (response.statusCode == 200) {
         // print(response.body);
-        feed = RssFeed.parse(response.body);
+        setState(() {
+          feed = RssFeed.parse(response.body);
+        });
+
       }
     } catch (e) {
       print('Error loading RSS feed: $e');
@@ -58,9 +61,12 @@ class _HomeSectionTabState extends State<HomeSectionTab> {
           ],
         ),
         SizedBox(
+
           child: (feed == null)
               ? Center(child: CupertinoActivityIndicator())
-              : ListView.builder(itemBuilder: (context, index) {
+              : ListView.builder(
+              itemCount: 2,
+              itemBuilder: (context, index) {
                   var item = feed!.items![index];
 
                   return NewsWidget(
