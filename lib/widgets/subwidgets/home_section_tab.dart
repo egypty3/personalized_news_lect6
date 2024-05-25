@@ -6,6 +6,8 @@ import 'package:the_app/widgets/news_widget.dart';
 import 'package:webfeed_plus/domain/rss_feed.dart';
 import 'package:http/http.dart' as http;
 
+import '../../screens/viewmorescreen.dart';
+
 class HomeSectionTab extends StatefulWidget {
   final String topic;
   const HomeSectionTab({super.key, required this.topic});
@@ -61,10 +63,11 @@ class _HomeSectionTabState extends State<HomeSectionTab> {
           ],
         ),
         SizedBox(
-
           child: (feed == null)
               ? Center(child: CupertinoActivityIndicator())
               : ListView.builder(
+              //physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
               itemCount: 2,
               itemBuilder: (context, index) {
                   var item = feed!.items![index];
@@ -76,6 +79,29 @@ class _HomeSectionTabState extends State<HomeSectionTab> {
                       author: item.source!.value ?? '',
                       link: item.link ?? '');
                 }),
+        ),
+        Row(
+          children: [
+            Spacer(),
+            InkWell(
+              onTap: (){
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>ViewMore(
+                    name: widget.topic,
+                    getURL: "https://news.google.com/rss/headlines/section/topic/${widget.topic.toUpperCase()}?ceid=US:EN&hl=en&gl=US",
+                  ))
+                  );
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: AppText(
+                  text: "View More",
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
         )
       ],
     );

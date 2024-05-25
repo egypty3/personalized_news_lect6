@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_app/utils/onboarding_utils/topics.dart';
+import 'package:the_app/widgets/subwidgets/home_section_country.dart';
 
 import '../utils/appcolors.dart';
 import '../widgets/apptext.dart';
@@ -74,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }),
             ),
             HomeSectionTab(topic: tabName),
+            HomeSectionCountry(),
           ],
         ),
       ),
